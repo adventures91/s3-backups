@@ -44,7 +44,7 @@ def backup():
 
     # create postgres databeses dump
     with tempfile.NamedTemporaryFile() as t1:
-        cmd = "%s -u %s --password=%s -h %s" % (MYSQL_DUMP_CMD, MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST)
+        cmd = "%s -u %s --password=%s -h %s -P" % (MYSQL_DUMP_CMD, MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_PORT)
         proc1 = subprocess.Popen(cmd, shell=True, universal_newlines=True, stdout=t1)
         proc1.wait()
         t1.flush()
@@ -159,6 +159,7 @@ if __name__ == '__main__':
     parser.add_argument('-v', '--verbose', action='store_true', help='Verbose output')
     parser.add_argument('--MYSQL_DUMP_CMD', default='/usr/bin/mysqldump --all-databases', help="mysqldump command (default: /usr/bin/mysqldump --all-databases)")
     parser.add_argument('--MYSQL_HOST', default='localhost', help="Mysql host (default: localhost)")
+    parser.add_argument('--MYSQL_PORT', default='3306', help="Mysql port (default: port)")
     parser.add_argument('--MYSQL_USER', default='root', help="Mysql user (default: root)")
     parser.add_argument('--MYSQL_PASSWORD', default='', help="Mysql password (default: '')")
     parser.add_argument('--ARCHIVE_NAME', default='all_databases', help='The base name for the archive')
@@ -173,6 +174,7 @@ if __name__ == '__main__':
     S3_KEY_NAME = args.S3_KEY_NAME
     MYSQL_DUMP_CMD = args.MYSQL_DUMP_CMD
     MYSQL_HOST = args.MYSQL_HOST
+    MYSQL_PORT = args.MYSQL_PORT
     MYSQL_USER = args.MYSQL_USER
     MYSQL_PASSWORD = args.MYSQL_PASSWORD
     ARCHIVE_NAME = args.ARCHIVE_NAME
