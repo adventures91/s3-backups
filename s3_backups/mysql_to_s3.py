@@ -44,7 +44,7 @@ def backup():
 
     # create postgres databeses dump
     with tempfile.NamedTemporaryFile() as t1:
-        cmd = "%s -u %s --password=%s -h %s -P" % (MYSQL_DUMP_CMD, MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_PORT)
+        cmd = "%s -u %s --password=%s -h %s -P %s" % (MYSQL_DUMP_CMD, MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_PORT)
         proc1 = subprocess.Popen(cmd, shell=True, universal_newlines=True, stdout=t1)
         proc1.wait()
         t1.flush()
